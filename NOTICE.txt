@@ -1,0 +1,24 @@
+|===================================|
+	LocK-A-FoLdeR
+	Copyright © 2011 Gurjit Singh
+	Licensed under Apache License 2.0
+|===================================|
+
+	Portions Copyright Autoit3
+	© Jonathan Bennett & AutoIt Team
+	[http://www.autoitscript.com/autoit3/]
+
+	Main Icon used from I Love Icons By Svengraph
+	[http://svengraph.deviantart.com/art/I-Love-Icons-178980215]
+
+	Installer written in NSIS
+	Copyright (C) Nullsoft, Inc. and NSIS team
+	[http://www.nsis.sourceforge.net/]
+
+
+|===================================|
+	Contributions
+|===================================|
+
+	Spanish Language Contributed by OCReactive
+	[cuesta.oscar@gmail.com]
