@@ -66,6 +66,7 @@ If _Singleton($AppName, 1) = 0 Then
 	Exit
 EndIf
 If Not FileExists(@WindowsDir & "\system32\takeown.exe") Then $winver = "XP"
+;Global $winver = "XP"
 Global $WIN1 = GUICreate($AppName & " " & $AppVer , 449, 296)
 getpass()
 If $CmdLine[0] = 0 Then
@@ -275,7 +276,7 @@ _DebugOut("$user = " & $user[0])
 	If $winver = "XP" Then
 _DebugOut("$winver = XP")
 
-		Local $Proc = RunWait(@ComSpec & " /c echo y| " & @WindowsDir & "\system32\cacls.exe" & ' "' & $slected & '" /c ' & "/d " & $user[0], "", @SW_HIDE)
+		Local $Proc = RunWait(@ComSpec & " /c " & @WindowsDir & "\system32\cacls.exe" & ' "' & $slected & '" /c ' & "/e /d " & $user[0], "", @SW_HIDE)
 _DebugOut("RunWait(cacls.exe) = " & $Proc)
 	Else
 		Local $Proc = RunWait(@ComSpec & " /c takeown /f " & ' "' & $slected & '" ' & " /r /d y & icacls" & ' "' & $slected & '" ' & "/deny " & $user[0] & ":F /C", "", @SW_HIDE)
@@ -325,7 +326,7 @@ _DebugOut("$user = " & $user[0])
 	If @error Then Return("error processing SID")
 	If $winver = "XP" Then
 _DebugOut("$winver = XP")
-		Local $Proc = RunWait(@ComSpec & " /c echo y| " & @WindowsDir & "\system32\cacls.exe" & ' "' & $slected & '" /c ' & "/g " & $user[0] & ":f", "", @SW_HIDE)
+		Local $Proc = RunWait(@ComSpec & " /c " & @WindowsDir & "\system32\cacls.exe" & ' "' & $slected & '" /c ' & "/e /g " & $user[0] & ":f", "", @SW_HIDE)
 _DebugOut("RunWait(cacls.exe) = " & $Proc)
 
 	Else
