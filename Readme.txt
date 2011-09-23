@@ -1,5 +1,5 @@
 LocK-A-FoLdeR
-Version 3.6 (Milestone 1.0)
+Version 3.7 (Milestone 1.0)
 Copyright © 2011 Gurjit Singh
 
 LocK-A-FoLdeR

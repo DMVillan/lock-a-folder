@@ -1,4 +1,4 @@
-; LocK-A-FoLdeR 3.6
+; LocK-A-FoLdeR 3.7
 ; © 2011 Gurjit Singh.
 ;
 ; Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,7 +15,7 @@
 ;
   !include "MUI2.nsh"
    !define MUI_NAME "LocK-A-FoLdeR"
-   !define MUI_VER "3.6"
+   !define MUI_VER "3.7"
    !define MUI_LINK "http://code.google.com/p/lock-a-folder"
    !define APPFILE "lock-a-folder.exe"
    !define OUTFILE "${MUI_NAME}-V${MUI_VER}.exe"

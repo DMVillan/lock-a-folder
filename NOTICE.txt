@@ -22,3 +22,6 @@
 
 	Spanish Language Contributed by OCReactive
 	[cuesta.oscar@gmail.com]
+
+	Hebrew Language Contributed by Eli Mizrahi
+	[eliva361@gmail.com]

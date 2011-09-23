@@ -1,7 +1,7 @@
 ==========
 COPYRIGHT
 ==========
- LocK-A-FoLdeR 3.6
+ LocK-A-FoLdeR
  © 2011 Gurjit Singh.
 
  Licensed under the Apache License, Version 2.0 (the "License");

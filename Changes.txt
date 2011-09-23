@@ -3,6 +3,10 @@
 + = Addition, ! = Bug Fix, ^ = Update,* = Move
 __________________________________
 
+LocK-A-FoLdeR Version 3.7 | 23-09-2011
+! Fixed Issues with non-english versions of windows.
++ Added Hebrew language.
+
 LocK-A-FoLdeR Version 3.6 | 13-08-2011
 + Added Command line parameters.
 ^ Improved Installer.
