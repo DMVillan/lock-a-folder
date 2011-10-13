@@ -1,5 +1,5 @@
 LocK-A-FoLdeR
-Version 3.7 
+Version 3.8
 Copyright © 2011 Gurjit Singh
 
 LocK-A-FoLdeR
@@ -51,6 +51,31 @@ LocK-A-FoLdeR.exe /uk "C:\Users\Gurjit\Downloads"
 
 To Unlock all Locked folders :
 LocK-A-FoLdeR.exe /ukall
+
+TROUBLESHOOTING
+===============
+To manually unlock folders in :
+===> Windows 7 & Vista
+	Open Folder Options from the Control Panel
+	Click the View tab
+	Under the Advanced settings, check the Show hidden files and folders radio box and uncheck Hide protected operating system files (Recommended) radio box
+	Click OK
+	Right click on the folder you want to Unlock then go to properties.
+	Now click on the Security tab and then click the Advanced button at the bottom.
+	Select the Owner tab in the next windows.
+	Now click on the Edit button. In the next windows select your username in the ‘Change owner to’ field and check the "Replace owner of subcontainers and objects" option.
+	Now click OK on all the dialog boxes that are open. That’s it :)
+
+===> Windows XP
+	Open Windows Explorer(My Computer).
+	On the Tools menu, select Folder Options.
+	move to the View tab.
+	Check the "Show hidden files and folders" radio box and uncheck "Hide protected operating system files (Recommended)" & "Use simple file sharing (Recommended)" radio box
+	Right click on the folder you want to Unlock then go to properties.
+	Now click on the Security tab and then click the Advanced button at the bottom.
+	Select the Owner tab in the next windows.
+	In the next windows select your username in the ‘Change owner to’ field and check the "Replace owner of subcontainers and objects" option.
+	Now click OK on all the dialog boxes that are open. That’s it :)
 
 CREDITS
 ======

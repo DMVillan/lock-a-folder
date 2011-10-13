@@ -5,9 +5,9 @@
 #AutoIt3Wrapper_Compression=4
 #AutoIt3Wrapper_UseX64=n
 #AutoIt3Wrapper_Res_Comment=LocK-A-FoLdeR allows you to hide and lock up any folders on your computer.
-#AutoIt3Wrapper_Res_Description=LocK-A-FoLdeR 3.7
-#AutoIt3Wrapper_Res_Fileversion=3.7.0.0
-#AutoIt3Wrapper_Res_ProductVersion=3.7
+#AutoIt3Wrapper_Res_Description=LocK-A-FoLdeR 3.8
+#AutoIt3Wrapper_Res_Fileversion=3.8.0.0
+#AutoIt3Wrapper_Res_ProductVersion=3.8
 #AutoIt3Wrapper_Res_LegalCopyright=© Gurjit Singh
 #AutoIt3Wrapper_Res_SaveSource=y
 #AutoIt3Wrapper_Res_Language=1033
@@ -15,7 +15,7 @@
 
 #cs ----------------------------------------------------------------------------
 
-	LocK-A-FoLdeR Version: 3.7
+	LocK-A-FoLdeR Version: 3.8
 	Author: Gurjit Singh
 	Webpage: http://lock-a-folder.googlecode.com/
 	Written in AutoIt v3.3.6.1
@@ -37,7 +37,7 @@
 
 #ce ----------------------------------------------------------------------------
 Opt("MustDeclareVars", 1)
-Global Const $AppName = "LocK-A-FoLdeR",$AppVer = "3.7",$Apppage = "http://lock-a-folder.googlecode.com/",$updatefile = 'http://lock-a-folder.googlecode.com/files/Updates.ini'
+Global Const $AppName = "LocK-A-FoLdeR",$AppVer = "3.8",$Apppage = "http://lock-a-folder.googlecode.com/",$updatefile = 'http://lock-a-folder.googlecode.com/files/Updates.ini'
 Global $Langdir = @ScriptDir & '\' & 'Lang',$Language = RegRead("HKEY_CURRENT_USER\SOFTWARE\" & $AppName, "Lang"),$Transby,$Translink,$winver
 #include <ButtonConstants.au3>
 #include <GUIConstantsEx.au3>
@@ -534,9 +534,14 @@ _DebugOut('InetClose($Temp) = ' & $debug )
 		If FileExists(@ScriptDir & "\" & "updatesinstaller.exe") Then
 			MsgBox(0, "", "File Downloaded @ " & @ScriptDir & "\" & "updatesinstaller.exe", 0, $WIN1)
 _DebugOut("Executing updatesinstaller.exe" )
+		$Temp = MsgBox(4, $AppName, "Do you want to start update now ?" & @LF & "Filesize = " & $len1 & "KB \ " & $slected & "MB", 0, $WIN1)
+		If $Temp = 6 Then
 			Sleep(500)
 			$debug = ShellExecute(@ScriptDir & "\" & "updatesinstaller.exe")
 _DebugOut('ShellExecute("updatesinstaller.exe") = ' & $debug )
+		Else
+			Return
+		EndIf
 		Else
 			MsgBox(0, "", "Update Failed", 0, $WIN1)
 		EndIf
