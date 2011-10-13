@@ -360,6 +360,11 @@ EndFunc   ;==>UnLock
 
 Func getpass()
 	Local $passwd = RegRead("HKEY_CURRENT_USER\SOFTWARE\" & $AppName, "EP")
+_DebugOut('RegRead("HKEY_CURRENT_USER\SOFTWARE\" & $AppName, "EP" = ' & $passwd & "|" & @error)
+	If @error Then
+	MsgBox(0, $AppName, "Unable to access Windows registry. Try to run application as administrator or reinstall application.", 0, $WIN1)
+	Exit
+	EndIf
 	If $passwd = "" Or $passwd = "0" Then
 		MsgBox(0, $AppName, Lang('alertmasterpass'), 0, $WIN1)
 		changepass()

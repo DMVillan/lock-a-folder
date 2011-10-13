@@ -128,6 +128,8 @@ Section "Components"
   WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${MUI_NAME}" "DisplayIcon" "$INSTDIR\${MUI_NAME}.exe"
   WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${MUI_NAME}" "DisplayVersion" "${MUI_VER}"
   WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${MUI_NAME}" "HelpLink" "${MUI_LINK}"
+  WriteRegStr HKCU "Software\${MUI_NAME}" "EP" ""
+
 SetAutoClose true
 SectionEnd
 
