@@ -61,6 +61,7 @@ If Not FileExists($Langdir & "\" & $Langslice & ".ini") Then $Language = "Englis
 _DebugSetup ("LocK-A-FoLdeR Debug Window", True,4,@ScriptDir & "\debug.log")
 _DebugBugReportEnv()
 _DebugOut(_Now())
+_DebugOut($AppName &  "-" & $AppVer &  "-" & $Language &  "-" & $Langdir )
 If _Singleton($AppName, 1) = 0 Then
 	MsgBox(0, $AppName, $AppName & " "& Lang('alreadyrunning'))
 	Exit
@@ -107,7 +108,7 @@ If $CmdLine[0] = 0 Then
 	Global $Button5 = GUICtrlCreateButton(Lang('openreadme'), 8, 209, 203, 29)
 	Global $Button6 = GUICtrlCreateButton(Lang('visitwebpage'), 212, 209, 227, 29)
 	GUICtrlCreateTabItem("License")
-	Global $Edit1 = GUICtrlCreateEdit(Fileread("License-AL2.0.txt"), 3, 27, 437, 237, $ES_READONLY + $WS_VSCROLL + $WS_HSCROLL)
+	Global $Edit1 = GUICtrlCreateEdit(Fileread("LICENSE.txt"), 3, 27, 437, 237, $ES_READONLY + $WS_VSCROLL + $WS_HSCROLL)
 	Global $tabi3 = GUICtrlCreateTabItem(Lang('RescueCentre'))
 	Global $Button7 = GUICtrlCreateButton(Lang('Rescuefolder'), 6, 28, 435, 33)
 	Global $Label6 = GUICtrlCreateLabel(Lang('notinlist'), 8, 68, 425, 92)
@@ -276,10 +277,10 @@ _DebugOut("$user = " & $user[0])
 	If $winver = "XP" Then
 _DebugOut("$winver = XP")
 
-		Local $Proc = RunWait(@ComSpec & " /c " & @WindowsDir & "\system32\cacls.exe" & ' "' & $slected & '" /c ' & "/e /d " & $user[0], "", @SW_HIDE)
+		Local $Proc = RunWait(@ComSpec & " /c " & @WindowsDir & "\system32\cacls.exe" & ' "' & $slected & '" /c ' & "/e /p " & $user[0] & ":n", "", @SW_HIDE)
 _DebugOut("RunWait(cacls.exe) = " & $Proc)
 	Else
-		Local $Proc = RunWait(@ComSpec & " /c takeown /f " & ' "' & $slected & '" ' & " /r /d y & icacls" & ' "' & $slected & '" ' & "/deny " & $user[0] & ":F /C", "", @SW_HIDE)
+		Local $Proc = RunWait(@ComSpec & " /c takeown /f " & ' "' & $slected & '" ' & " /r /d y & icacls" & ' "' & $slected & '" ' & "/deny " & $user[0] & ":F /c /q", "", @SW_HIDE)
 _DebugOut("RunWait(icacls) = " & $Proc)
 	EndIf
 	ProcessWaitClose($Proc)
@@ -326,11 +327,11 @@ _DebugOut("$user = " & $user[0])
 	If @error Then Return("error processing SID")
 	If $winver = "XP" Then
 _DebugOut("$winver = XP")
-		Local $Proc = RunWait(@ComSpec & " /c " & @WindowsDir & "\system32\cacls.exe" & ' "' & $slected & '" /c ' & "/e /g " & $user[0] & ":f", "", @SW_HIDE)
+		Local $Proc = RunWait(@ComSpec & " /c " & @WindowsDir & "\system32\cacls.exe" & ' "' & $slected & '" /c /t ' & "/e /r " & $user[0], "", @SW_HIDE)
 _DebugOut("RunWait(cacls.exe) = " & $Proc)
 
 	Else
-		Local $Proc = RunWait(@ComSpec & " /c takeown /f" & ' "' & $slected & '" ' & "/a /r /d y & icacls" & ' "' & $slected & '" ' & "/reset /c /t", "", @SW_HIDE)
+		Local $Proc = RunWait(@ComSpec & " /c takeown /f" & ' "' & $slected & '" ' & "/r /d y & icacls" & ' "' & $slected & '" ' & "/reset /c /t /q", "", @SW_HIDE)
 _DebugOut("RunWait(icacls) = " & $Proc)
 	EndIf
 	ProcessWaitClose($Proc)
@@ -360,7 +361,7 @@ EndFunc   ;==>UnLock
 
 Func getpass()
 	Local $passwd = RegRead("HKEY_CURRENT_USER\SOFTWARE\" & $AppName, "EP")
-_DebugOut('RegRead("HKEY_CURRENT_USER\SOFTWARE\" & $AppName, "EP" = ' & $passwd & "|" & @error)
+;_DebugOut('RegRead("HKEY_CURRENT_USER\SOFTWARE\" & $AppName, "EP" = ' & $passwd & "|" & @error)
 	If @error Then
 	MsgBox(0, $AppName, "Unable to access Windows registry. Try to run application as administrator or reinstall application.", 0, $WIN1)
 	Exit
