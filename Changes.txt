@@ -3,6 +3,11 @@
 + = Addition, ! = Bug Fix, ^ = Update,* = Move
 __________________________________
 
+LocK-A-FoLdeR Version 3.9 | 24-10-2011
++ Added Dutch Language
+! Fixed issues with Windows XP(not able to unlock folders sometimes)
+! Fixed security bug
+
 LocK-A-FoLdeR Version 3.8 | 13-10-2011
 ! Fixed "Invalid Password" prompt when creating new password due to registry permissions.
 + Added Arabic language.

@@ -1,4 +1,4 @@
-; LocK-A-FoLdeR 3.8
+; LocK-A-FoLdeR 3.9
 ; © 2011 Gurjit Singh.
 ;
 ; Licensed under the Apache License, Version 2.0 (the "License");
@@ -15,7 +15,7 @@
 ;
   !include "MUI2.nsh"
    !define MUI_NAME "LocK-A-FoLdeR"
-   !define MUI_VER "3.8"
+   !define MUI_VER "3.9"
    !define MUI_LINK "http://code.google.com/p/lock-a-folder"
    !define APPFILE "lock-a-folder.exe"
    !define OUTFILE "${MUI_NAME}-V${MUI_VER}.exe"
@@ -112,7 +112,6 @@ Section "Components"
   SetOutPath "$INSTDIR"
     File "Readme.txt"
 	File "NOTICE.txt"
-	File "License-AL2.0.txt"
 	File "LICENSE.txt"	
     File "COPYING.TXT"
     File "Changes.TXT"	
@@ -137,7 +136,6 @@ Section "Uninstall"
   Delete "$INSTDIR\Readme.txt"
   Delete "$INSTDIR\NOTICE.txt"
   Delete "$INSTDIR\LICENSE.txt"
-  Delete "$INSTDIR\License-AL2.0.txt"
   Delete "$INSTDIR\Uninstall.exe"
   Delete "$INSTDIR\COPYING.TXT"
   Delete "$INSTDIR\Changes"
