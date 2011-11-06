@@ -3,6 +3,9 @@
 + = Addition, ! = Bug Fix, ^ = Update,* = Move
 __________________________________
 
+LocK-A-FoLdeR Version 3.9.1 | 06-11-2011
+! Major Bug fix
+
 LocK-A-FoLdeR Version 3.9 | 24-10-2011
 + Added Dutch Language
 ! Fixed issues with Windows XP(not able to unlock folders sometimes)
