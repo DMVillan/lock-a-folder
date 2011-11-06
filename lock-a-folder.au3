@@ -327,7 +327,7 @@ _DebugOut("$user = " & $user[0])
 	If @error Then Return("error processing SID")
 	If $winver = "XP" Then
 _DebugOut("$winver = XP")
-		Local $Proc = RunWait(@ComSpec & " /c " & @WindowsDir & "\system32\cacls.exe" & ' "' & $slected & '" /c /t ' & "/e /r " & $user[0], "", @SW_HIDE)
+		Local $Proc = RunWait(@ComSpec & " /c " & @WindowsDir & "\system32\cacls.exe" & ' "' & $slected & '" /c ' & "/e /g " & $user[0] & ":f" & ' & cacls "'  & $slected & '" /c /t ' & "/e /r " & $user[0], "", @SW_HIDE)
 _DebugOut("RunWait(cacls.exe) = " & $Proc)
 
 	Else
