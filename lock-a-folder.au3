@@ -67,7 +67,7 @@ If _Singleton($AppName, 1) = 0 Then
 	Exit
 EndIf
 If Not FileExists(@WindowsDir & "\system32\takeown.exe") Then $winver = "XP"
-;Global $winver = "XP"
+Global $winver = "XP"
 Global $WIN1 = GUICreate($AppName & " " & $AppVer , 449, 296)
 getpass()
 If $CmdLine[0] = 0 Then
@@ -347,13 +347,13 @@ _DebugOut("_FileCreate() = " & $Temp)
 		Local $user3 = _Security__LookupAccountSid("S-1-3-0")
 		Local $user4 = _Security__LookupAccountSid("S-1-5-32-545")
 
-		Local $Proc = RunWait(@ComSpec & " /c " & @WindowsDir & "\system32\cacls.exe" & ' "' & $slected & '" /t /c ' & "/e /g " & $user1[0] & ":(OI)(CI)F", "", @SW_HIDE)
+		Local $Proc = RunWait(@ComSpec & " /c " & @WindowsDir & "\system32\cacls.exe" & ' "' & $slected & '" /t /c ' & "/e /g " & $user1[0] & ":F", "", @SW_HIDE)
 		ProcessWaitClose($Proc)
-		Local $Proc = RunWait(@ComSpec & " /c " & @WindowsDir & "\system32\cacls.exe" & ' "' & $slected & '" /t /c ' & "/e /g " & $user2[0] & ":(OI)(CI)F", "", @SW_HIDE)
+		Local $Proc = RunWait(@ComSpec & " /c " & @WindowsDir & "\system32\cacls.exe" & ' "' & $slected & '" /t /c ' & "/e /g " & $user2[0] & ":F", "", @SW_HIDE)
 		ProcessWaitClose($Proc)
-		Local $Proc = RunWait(@ComSpec & " /c " & @WindowsDir & "\system32\cacls.exe" & ' "' & $slected & '" /t /c ' & "/e /g " & $user3[0] & ":(OI)(CI)(IO)F", "", @SW_HIDE)
+		Local $Proc = RunWait(@ComSpec & " /c " & @WindowsDir & "\system32\cacls.exe" & ' "' & $slected & '" /t /c ' & "/e /g " & $user3[0] & ":F", "", @SW_HIDE)
 		ProcessWaitClose($Proc)
-		Local $Proc = RunWait(@ComSpec & " /c " & @WindowsDir & "\system32\cacls.exe" & ' "' & $slected & '" /t /c ' & "/e /g " & $user4[0] & ":(OI)(CI)R", "", @SW_HIDE)
+		Local $Proc = RunWait(@ComSpec & " /c " & @WindowsDir & "\system32\cacls.exe" & ' "' & $slected & '" /t /c ' & "/e /g " & $user4[0] & ":R", "", @SW_HIDE)
 		ProcessWaitClose($Proc)
 
 		Local $Temp = _FileCreate($TempFile)
