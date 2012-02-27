@@ -67,7 +67,7 @@ If _Singleton($AppName, 1) = 0 Then
 	Exit
 EndIf
 If Not FileExists(@WindowsDir & "\system32\takeown.exe") Then $winver = "XP"
-Global $winver = "XP"
+;Global $winver = "XP"
 Global $WIN1 = GUICreate($AppName & " " & $AppVer , 449, 296)
 getpass()
 If $CmdLine[0] = 0 Then
