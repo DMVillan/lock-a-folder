@@ -3,6 +3,9 @@
 + = Addition, ! = Bug Fix, ^ = Update,* = Move
 __________________________________
 
+LocK-A-FoLdeR Version 3.9.2 | 27-02-2012
+! Major Bug fix
+
 LocK-A-FoLdeR Version 3.9.1 | 06-11-2011
 ! Major Bug fix
 

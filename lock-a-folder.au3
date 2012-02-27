@@ -5,9 +5,9 @@
 #AutoIt3Wrapper_Compression=4
 #AutoIt3Wrapper_UseX64=n
 #AutoIt3Wrapper_Res_Comment=LocK-A-FoLdeR allows you to hide and lock up any folders on your computer.
-#AutoIt3Wrapper_Res_Description=LocK-A-FoLdeR 3.9.1
-#AutoIt3Wrapper_Res_Fileversion=3.9.1.0
-#AutoIt3Wrapper_Res_ProductVersion=3.9.1
+#AutoIt3Wrapper_Res_Description=LocK-A-FoLdeR 3.9.2
+#AutoIt3Wrapper_Res_Fileversion=3.9.2.0
+#AutoIt3Wrapper_Res_ProductVersion=3.9.2
 #AutoIt3Wrapper_Res_LegalCopyright=© Gurjit Singh
 #AutoIt3Wrapper_Res_SaveSource=y
 #AutoIt3Wrapper_Res_Language=1033
@@ -15,10 +15,10 @@
 
 #cs ----------------------------------------------------------------------------
 
-	LocK-A-FoLdeR Version: 3.9.1
+	LocK-A-FoLdeR Version: 3.9.2
 	Author: Gurjit Singh
 	Webpage: http://lock-a-folder.googlecode.com/
-	Written in AutoIt v3.3.6.1
+	Written in AutoIt v3.3.8.1
 	Script Function:
 	LocK-A-FoLdeR allows you to hide and lock up any folders on your computer, making them invisible and inaccessible to anyone but yourself. After you create a master password, simply select the folder(s) you want to hide and click a button to make them disappear. To unlock a folder, enter your password and select the folder that you want to unlock.
 	License: Apache License 2.0 (http://www.opensource.org/licenses/apache2.0.php)
@@ -37,7 +37,7 @@
 
 #ce ----------------------------------------------------------------------------
 Opt("MustDeclareVars", 1)
-Global Const $AppName = "LocK-A-FoLdeR",$AppVer = "3.9.1",$Apppage = "http://lock-a-folder.googlecode.com/",$updatefile = 'http://lock-a-folder.googlecode.com/hg/Updates.ini'
+Global Const $AppName = "LocK-A-FoLdeR",$AppVer = "3.9.2",$Apppage = "http://lock-a-folder.googlecode.com/",$updatefile = 'http://lock-a-folder.googlecode.com/hg/Updates.ini'
 Global $Langdir = @ScriptDir & '\' & 'Lang',$Language = RegRead("HKEY_CURRENT_USER\SOFTWARE\" & $AppName, "Lang"),$Transby,$Translink,$winver
 #include <ButtonConstants.au3>
 #include <GUIConstantsEx.au3>
@@ -280,7 +280,7 @@ _DebugOut("$winver = XP")
 		Local $Proc = RunWait(@ComSpec & " /c " & @WindowsDir & "\system32\cacls.exe" & ' "' & $slected & '" /c ' & "/e /p " & $user[0] & ":n", "", @SW_HIDE)
 _DebugOut("RunWait(cacls.exe) = " & $Proc)
 	Else
-		Local $Proc = RunWait(@ComSpec & " /c takeown /f " & ' "' & $slected & '" ' & " /r /d y & icacls" & ' "' & $slected & '" ' & "/deny " & $user[0] & ":F /c /q", "", @SW_HIDE)
+		Local $Proc = RunWait(@ComSpec & " /c takeown /f " & ' "' & $slected & '" ' & " /r /d y & icacls" & ' "' & $slected & '" ' & "/deny " & $user[0] & ":(F) /c /q", "", @SW_HIDE)
 _DebugOut("RunWait(icacls) = " & $Proc)
 	EndIf
 	ProcessWaitClose($Proc)
@@ -323,11 +323,12 @@ Func UnLock($slected)
 	GUISetState(@SW_DISABLE)
 	EndIf
 	Local $user = _Security__LookupAccountSid("S-1-1-0")
+
 _DebugOut("$user = " & $user[0])
 	If @error Then Return("error processing SID")
 	If $winver = "XP" Then
 _DebugOut("$winver = XP")
-		Local $Proc = RunWait(@ComSpec & " /c " & @WindowsDir & "\system32\cacls.exe" & ' "' & $slected & '" /c ' & "/e /g " & $user[0] & ":f" & ' & cacls "'  & $slected & '" /c /t ' & "/e /r " & $user[0], "", @SW_HIDE)
+		Local $Proc = RunWait(@ComSpec & " /c " & @WindowsDir & "\system32\cacls.exe" & ' "'  & $slected & '" /c /t ' & "/e /r " & $user[0], "", @SW_HIDE)
 _DebugOut("RunWait(cacls.exe) = " & $Proc)
 
 	Else
@@ -340,6 +341,23 @@ _DebugOut("RunWait(icacls) = " & $Proc)
 _DebugOut("_TempFile() = " & $TempFile)
 	Local $Temp = _FileCreate($TempFile)
 _DebugOut("_FileCreate() = " & $Temp)
+	if @error Then
+		Local $user1 = _Security__LookupAccountSid("S-1-5-32-544")
+		Local $user2 = _Security__LookupAccountSid("S-1-5-18")
+		Local $user3 = _Security__LookupAccountSid("S-1-3-0")
+		Local $user4 = _Security__LookupAccountSid("S-1-5-32-545")
+
+		Local $Proc = RunWait(@ComSpec & " /c " & @WindowsDir & "\system32\cacls.exe" & ' "' & $slected & '" /t /c ' & "/e /g " & $user1[0] & ":(OI)(CI)F", "", @SW_HIDE)
+		ProcessWaitClose($Proc)
+		Local $Proc = RunWait(@ComSpec & " /c " & @WindowsDir & "\system32\cacls.exe" & ' "' & $slected & '" /t /c ' & "/e /g " & $user2[0] & ":(OI)(CI)F", "", @SW_HIDE)
+		ProcessWaitClose($Proc)
+		Local $Proc = RunWait(@ComSpec & " /c " & @WindowsDir & "\system32\cacls.exe" & ' "' & $slected & '" /t /c ' & "/e /g " & $user3[0] & ":(OI)(CI)(IO)F", "", @SW_HIDE)
+		ProcessWaitClose($Proc)
+		Local $Proc = RunWait(@ComSpec & " /c " & @WindowsDir & "\system32\cacls.exe" & ' "' & $slected & '" /t /c ' & "/e /g " & $user4[0] & ":(OI)(CI)R", "", @SW_HIDE)
+		ProcessWaitClose($Proc)
+
+		Local $Temp = _FileCreate($TempFile)
+	EndIf
 	If $Temp = 0 Then
 		MsgBox(0, $AppName, $slected & " " & Lang('unable2unlock'), 0, $WIN1)
 		If $CmdLine[0] = 0 Then Readfolders()
