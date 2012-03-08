@@ -7,10 +7,9 @@ Copyright © 2011 Gurjit Singh
 1	Introduction
 2	Updates
 3	Licensing
-4	Troubleshooting
-5	Command Line Parameters
-6	Contact
-7	Credits
+4	Command Line Parameters
+5	Contact
+6	Credits
 
 1 Introduction
 ===========
@@ -19,6 +18,7 @@ LocK-A-FoLdeR is a compact and easy to use program that allows you to hide and l
 - Extremely easy to use and straightforward Interface.
 - Uses almost no CPU (no extra services or processes).
 - Compatible with Windows XP/Vista/7.
+- Compatible All Filesystems.
 - Open Source (Free To Use/Distribute/Study/Modify).
 - Multilingual.
 and much more...
@@ -43,32 +43,7 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 
-4 Troubleshooting
-==============
-To manually unlock folders in :
-===> Windows 7 & Vista
-	Open Folder Options from the Control Panel
-	Click the View tab
-	Under the Advanced settings, check the Show hidden files and folders radio box and uncheck Hide protected operating system files (Recommended) radio box
-	Click OK
-	Right click on the folder you want to Unlock then go to properties.
-	Now click on the Security tab and then click the Advanced button at the bottom.
-	Select the Owner tab in the next windows.
-	Now click on the Edit button. In the next windows select your username in the ‘Change owner to’ field and check the "Replace owner of subcontainers and objects" option.
-	Now click OK on all the dialog boxes that are open. That’s it :)
-
-===> Windows XP
-	Open Windows Explorer(My Computer).
-	On the Tools menu, select Folder Options.
-	move to the View tab.
-	Check the "Show hidden files and folders" radio box and uncheck "Hide protected operating system files (Recommended)" & "Use simple file sharing (Recommended)" radio box
-	Right click on the folder you want to Unlock then go to properties.
-	Now click on the Security tab and then click the Advanced button at the bottom.
-	Select the Owner tab in the next windows.
-	In the next windows select your username in the ‘Change owner to’ field and check the "Replace owner of subcontainers and objects" option.
-	Now click OK on all the dialog boxes that are open. That’s it :)
-
-5 Command Line Parameters
+4 Command Line Parameters
 ======================
 LocK-A-FoLdeR.exe param "Folder[1]" "Folder[2]" "Folder[3]" "Folder[N]"
 
@@ -83,12 +58,12 @@ LocK-A-FoLdeR.exe /uk "C:\Users\Gurjit\Downloads"
 To Unlock all Locked folders :
 LocK-A-FoLdeR.exe /ukall
 
-6 Contact 
+5 Contact 
 ========
 For Bug reports, suggestions and such, please
 Email : correctlyincorrect@gmail.com 
 WWW : http://code.google.com/p/lock-a-folder/issues/list
 
-7 CREDITS
+6 CREDITS
 ***************
 Refer to NOTICE.txt

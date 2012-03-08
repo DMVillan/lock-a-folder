@@ -5,9 +5,9 @@
 #AutoIt3Wrapper_Compression=4
 #AutoIt3Wrapper_UseX64=n
 #AutoIt3Wrapper_Res_Comment=LocK-A-FoLdeR allows you to hide and lock up any folders on your computer.
-#AutoIt3Wrapper_Res_Description=LocK-A-FoLdeR 3.9.2
-#AutoIt3Wrapper_Res_Fileversion=3.9.2.0
-#AutoIt3Wrapper_Res_ProductVersion=3.9.2
+#AutoIt3Wrapper_Res_Description=LocK-A-FoLdeR 3.10
+#AutoIt3Wrapper_Res_Fileversion=3.10.0.0
+#AutoIt3Wrapper_Res_ProductVersion=3.10.0
 #AutoIt3Wrapper_Res_LegalCopyright=© Gurjit Singh
 #AutoIt3Wrapper_Res_SaveSource=y
 #AutoIt3Wrapper_Res_Language=1033
@@ -15,7 +15,7 @@
 
 #cs ----------------------------------------------------------------------------
 
-	LocK-A-FoLdeR Version: 3.9.2
+	LocK-A-FoLdeR Version: 3.10
 	Author: Gurjit Singh
 	Webpage: http://lock-a-folder.googlecode.com/
 	Written in AutoIt v3.3.8.1
@@ -37,7 +37,7 @@
 
 #ce ----------------------------------------------------------------------------
 Opt("MustDeclareVars", 1)
-Global Const $AppName = "LocK-A-FoLdeR",$AppVer = "3.9.2",$Apppage = "http://lock-a-folder.googlecode.com/",$updatefile = 'http://lock-a-folder.googlecode.com/hg/Updates.ini'
+Global Const $AppName = "LocK-A-FoLdeR",$AppVer = "3.10",$Apppage = "http://lock-a-folder.googlecode.com/",$updatefile = 'http://lock-a-folder.googlecode.com/hg/Updates.ini'
 Global $Langdir = @ScriptDir & '\' & 'Lang',$Language = RegRead("HKEY_CURRENT_USER\SOFTWARE\" & $AppName, "Lang"),$Transby,$Translink,$winver
 #include <ButtonConstants.au3>
 #include <GUIConstantsEx.au3>
@@ -66,8 +66,6 @@ If _Singleton($AppName, 1) = 0 Then
 	MsgBox(0, $AppName, $AppName & " "& Lang('alreadyrunning'))
 	Exit
 EndIf
-If Not FileExists(@WindowsDir & "\system32\takeown.exe") Then $winver = "XP"
-;Global $winver = "XP"
 Global $WIN1 = GUICreate($AppName & " " & $AppVer , 449, 296)
 getpass()
 If $CmdLine[0] = 0 Then
@@ -251,17 +249,10 @@ Func Lock($slected)
 		MsgBox(0, $AppName, $slected & " " & Lang('doesntexist'), 0, $WIN1)
 		Return('doesntexist')
 	EndIf
-	_PathSplit($slected, $TempFile, $Temp, $Temp, $Temp)
-	$Temp = DriveGetFileSystem($TempFile)
-_DebugOut("DriveGetFileSystem = " & $Temp)
-	If $Temp <> "NTFS" Then
-		MsgBox(0, $AppName, $AppName & " only works with NTFS filesystem", 0, $WIN1)
-		Return("notntfs")
-	EndIf
 	Local $l0ckd = RegRead("HKEY_CURRENT_USER\SOFTWARE\" & $AppName, "lockedfolders")
 _DebugOut('RegRead("HKEY_CURRENT_USER\SOFTWARE\" & $AppName, "lockedfolders") = ' & $l0ckd)
-	$Temp = StringInStr($l0ckd, $slected)
-	If Not $Temp = 0 Then
+
+	If Not StringInStr($l0ckd, $slected & ".{00021401-0000-0000-C000-000000000046}|") = 0 Then
 		MsgBox(0, $AppName, $slected & " " & Lang('alreadyinlist'), 0, $WIN1)
 		Return('alreadyinlist')
 	EndIf
@@ -270,35 +261,16 @@ _DebugOut('RegRead("HKEY_CURRENT_USER\SOFTWARE\" & $AppName, "lockedfolders") = 
 	GUICtrlSetData($List1, Lang('plzwait') & "....")
 	GUISetState(@SW_DISABLE)
 	EndIf
-	Local $user = _Security__LookupAccountSid("S-1-1-0")
-_DebugOut("$user = " & $user[0])
-	If @error Then Return("error processing SID")
-	FileSetAttrib($slected, "-R+SH")
-	If $winver = "XP" Then
-_DebugOut("$winver = XP")
-
-		Local $Proc = RunWait(@ComSpec & " /c " & @WindowsDir & "\system32\cacls.exe" & ' "' & $slected & '" /c ' & "/e /p " & $user[0] & ":n", "", @SW_HIDE)
-_DebugOut("RunWait(cacls.exe) = " & $Proc)
-	Else
-		Local $Proc = RunWait(@ComSpec & " /c takeown /f " & ' "' & $slected & '" ' & " /r /d y & icacls" & ' "' & $slected & '" ' & "/deny " & $user[0] & ":(F) /c /q", "", @SW_HIDE)
-_DebugOut("RunWait(icacls) = " & $Proc)
-	EndIf
-	ProcessWaitClose($Proc)
+_DebugOut($slected)
 	If $CmdLine[0] = 0 Then GUISetState(@SW_ENABLE)
-	$TempFile = _TempFile($slected)
-_DebugOut("_TempFile() = " & $TempFile)
-	$Temp = _FileCreate($TempFile)
-_DebugOut("_FileCreate() = " & $Temp)
-	Local $debug
-	If $Temp = 1 Then
-		$debug = FileDelete($TempFile)
-_DebugOut("FileDelete() = " & $debug)
-		$debug = FileSetAttrib($slected, "+R-SH")
-_DebugOut("FileSetAttrib() = " & $debug)
+	If DirMove($slected, $slected & ".{00021401-0000-0000-C000-000000000046}") = 0 Then
+		FileSetAttrib($slected, "-RSH")
 		MsgBox(0, $AppName, $slected & " " & Lang('unable2lock'), 0, $WIN1)
 		If $CmdLine[0] = 0 Then	Readfolders()
 		Return('unable2lock')
 	EndIf
+	$slected = $slected & ".{00021401-0000-0000-C000-000000000046}"
+	FileSetAttrib($slected, "+RSH")
 	$l0ckd &= $slected & "|"
 _DebugOut("$l0ckd &= $slected| = " & $l0ckd)
 	$debug = RegWrite("HKEY_CURRENT_USER\SOFTWARE\" & $AppName, "lockedfolders", "REG_SZ", $l0ckd)
@@ -313,6 +285,7 @@ Func Readfolders()
 EndFunc   ;==>Readfolders
 
 Func UnLock($slected)
+	_DebugOut($slected)
 	If $slected = "" Or @error Then
 		MsgBox(0, $AppName, Lang('selectfirst'), 0, $WIN1)
 		Return("Empty selection/Cancel Pressed")
@@ -322,51 +295,21 @@ Func UnLock($slected)
 	GUICtrlSetData($List1, Lang('plzwait') & "....")
 	GUISetState(@SW_DISABLE)
 	EndIf
-	Local $user = _Security__LookupAccountSid("S-1-1-0")
-
-_DebugOut("$user = " & $user[0])
-	If @error Then Return("error processing SID")
-	If $winver = "XP" Then
-_DebugOut("$winver = XP")
-		Local $Proc = RunWait(@ComSpec & " /c " & @WindowsDir & "\system32\cacls.exe" & ' "'  & $slected & '" /c /t ' & "/e /r " & $user[0], "", @SW_HIDE)
-_DebugOut("RunWait(cacls.exe) = " & $Proc)
-
-	Else
-		Local $Proc = RunWait(@ComSpec & " /c takeown /f" & ' "' & $slected & '" ' & "/r /d y & icacls" & ' "' & $slected & '" ' & "/reset /c /t /q", "", @SW_HIDE)
-_DebugOut("RunWait(icacls) = " & $Proc)
-	EndIf
-	ProcessWaitClose($Proc)
+Local $Temp = StringReplace($slected, ".{00021401-0000-0000-C000-000000000046}", "", 0, 2)
+_DebugOut("$Temp = " & $Temp)
+	FileSetAttrib($slected, "-RSH")
+Local $Temp1
+	$Temp1 = DirMove($slected, $Temp)
 	If $CmdLine[0] = 0 Then GUISetState(@SW_ENABLE)
-	Local $TempFile = _TempFile($slected)
-_DebugOut("_TempFile() = " & $TempFile)
-	Local $Temp = _FileCreate($TempFile)
-_DebugOut("_FileCreate() = " & $Temp)
-	if @error Then
-		Local $user1 = _Security__LookupAccountSid("S-1-5-32-544")
-		Local $user2 = _Security__LookupAccountSid("S-1-5-18")
-		Local $user3 = _Security__LookupAccountSid("S-1-3-0")
-		Local $user4 = _Security__LookupAccountSid("S-1-5-32-545")
-
-		Local $Proc = RunWait(@ComSpec & " /c " & @WindowsDir & "\system32\cacls.exe" & ' "' & $slected & '" /t /c ' & "/e /g " & $user1[0] & ":F", "", @SW_HIDE)
-		ProcessWaitClose($Proc)
-		Local $Proc = RunWait(@ComSpec & " /c " & @WindowsDir & "\system32\cacls.exe" & ' "' & $slected & '" /t /c ' & "/e /g " & $user2[0] & ":F", "", @SW_HIDE)
-		ProcessWaitClose($Proc)
-		Local $Proc = RunWait(@ComSpec & " /c " & @WindowsDir & "\system32\cacls.exe" & ' "' & $slected & '" /t /c ' & "/e /g " & $user3[0] & ":F", "", @SW_HIDE)
-		ProcessWaitClose($Proc)
-		Local $Proc = RunWait(@ComSpec & " /c " & @WindowsDir & "\system32\cacls.exe" & ' "' & $slected & '" /t /c ' & "/e /g " & $user4[0] & ":R", "", @SW_HIDE)
-		ProcessWaitClose($Proc)
-
-		Local $Temp = _FileCreate($TempFile)
+	If $Temp1 = 0 Then
+		$Temp1 = DirMove($slected, $Temp & ".recovered")
 	EndIf
-	If $Temp = 0 Then
+	If $Temp1 = 0 Then
+
 		MsgBox(0, $AppName, $slected & " " & Lang('unable2unlock'), 0, $WIN1)
 		If $CmdLine[0] = 0 Then Readfolders()
 		Return('unable2unlock')
 	EndIf
-	Local $debug = FileDelete($TempFile)
-_DebugOut("FileDelete() = " & $debug)
-	$debug = FileSetAttrib($slected, "+R-SH")
-_DebugOut("FileSetAttrib() = " & $debug)
 	Local $l0ckd = RegRead("HKEY_CURRENT_USER\SOFTWARE\" & $AppName, "lockedfolders")
 _DebugOut('RegRead("HKEY_CURRENT_USER\SOFTWARE\" & $AppName, "lockedfolders") = ' & $l0ckd)
 	$Temp = StringReplace($l0ckd, $slected & "|", "")
