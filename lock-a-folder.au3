@@ -252,7 +252,7 @@ Func Lock($slected)
 	Local $l0ckd = RegRead("HKEY_CURRENT_USER\SOFTWARE\" & $AppName, "lockedfolders")
 _DebugOut('RegRead("HKEY_CURRENT_USER\SOFTWARE\" & $AppName, "lockedfolders") = ' & $l0ckd)
 
-	If Not StringInStr($l0ckd, $slected & ".{00021401-0000-0000-C000-000000000046}|") = 0 Then
+	If Not StringInStr($l0ckd, $slected & ".{645FF040-5081-101B-9F08-00AA002F954E}|") = 0 Then
 		MsgBox(0, $AppName, $slected & " " & Lang('alreadyinlist'), 0, $WIN1)
 		Return('alreadyinlist')
 	EndIf
@@ -263,13 +263,13 @@ _DebugOut('RegRead("HKEY_CURRENT_USER\SOFTWARE\" & $AppName, "lockedfolders") = 
 	EndIf
 _DebugOut($slected)
 	If $CmdLine[0] = 0 Then GUISetState(@SW_ENABLE)
-	If DirMove($slected, $slected & ".{00021401-0000-0000-C000-000000000046}") = 0 Then
+	If DirMove($slected, $slected & ".{645FF040-5081-101B-9F08-00AA002F954E}") = 0 Then
 		FileSetAttrib($slected, "-RSH")
 		MsgBox(0, $AppName, $slected & " " & Lang('unable2lock'), 0, $WIN1)
 		If $CmdLine[0] = 0 Then	Readfolders()
 		Return('unable2lock')
 	EndIf
-	$slected = $slected & ".{00021401-0000-0000-C000-000000000046}"
+	$slected = $slected & ".{645FF040-5081-101B-9F08-00AA002F954E}"
 	FileSetAttrib($slected, "+RSH")
 	$l0ckd &= $slected & "|"
 _DebugOut("$l0ckd &= $slected| = " & $l0ckd)
@@ -295,7 +295,7 @@ Func UnLock($slected)
 	GUICtrlSetData($List1, Lang('plzwait') & "....")
 	GUISetState(@SW_DISABLE)
 	EndIf
-Local $Temp = StringReplace($slected, ".{00021401-0000-0000-C000-000000000046}", "", 0, 2)
+Local $Temp = StringReplace($slected, ".{645FF040-5081-101B-9F08-00AA002F954E}", "", 0, 2)
 _DebugOut("$Temp = " & $Temp)
 	FileSetAttrib($slected, "-RSH")
 Local $Temp1
