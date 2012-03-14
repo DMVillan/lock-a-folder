@@ -5,9 +5,9 @@
 #AutoIt3Wrapper_Compression=4
 #AutoIt3Wrapper_UseX64=n
 #AutoIt3Wrapper_Res_Comment=LocK-A-FoLdeR allows you to hide and lock up any folders on your computer.
-#AutoIt3Wrapper_Res_Description=LocK-A-FoLdeR 3.10.1
-#AutoIt3Wrapper_Res_Fileversion=3.10.1.0
-#AutoIt3Wrapper_Res_ProductVersion=3.10.1
+#AutoIt3Wrapper_Res_Description=LocK-A-FoLdeR 3.10.2
+#AutoIt3Wrapper_Res_Fileversion=3.10.2.0
+#AutoIt3Wrapper_Res_ProductVersion=3.10.2
 #AutoIt3Wrapper_Res_LegalCopyright=© Gurjit Singh
 #AutoIt3Wrapper_Res_SaveSource=y
 #AutoIt3Wrapper_Res_Language=1033
@@ -15,7 +15,7 @@
 
 #cs ----------------------------------------------------------------------------
 
-	LocK-A-FoLdeR Version: 3.10.1
+	LocK-A-FoLdeR Version: 3.10.2
 	Author: Gurjit Singh
 	Webpage: http://lock-a-folder.googlecode.com/
 	Written in AutoIt v3.3.8.1
@@ -37,7 +37,7 @@
 
 #ce ----------------------------------------------------------------------------
 Opt("MustDeclareVars", 1)
-Global Const $AppName = "LocK-A-FoLdeR",$AppVer = "3.10.1",$Apppage = "http://lock-a-folder.googlecode.com/",$updatefile = 'http://lock-a-folder.googlecode.com/hg/Updates.ini'
+Global Const $AppName = "LocK-A-FoLdeR",$AppVer = "3.10.2",$Apppage = "http://lock-a-folder.googlecode.com/",$updatefile = 'http://lock-a-folder.googlecode.com/hg/Updates.ini'
 Global $Langdir = @ScriptDir & '\' & 'Lang',$Language = RegRead("HKEY_CURRENT_USER\SOFTWARE\" & $AppName, "Lang"),$Transby,$Translink,$winver
 #include <ButtonConstants.au3>
 #include <GUIConstantsEx.au3>
@@ -54,7 +54,6 @@ Global $Langdir = @ScriptDir & '\' & 'Lang',$Language = RegRead("HKEY_CURRENT_US
 #include <Debug.au3>
 #Include <Date.au3>
 #Include <Security.au3>
-
 If $Language ="" Then $Language = "English"
 Global $Langslice = StringRegExpReplace($Language, '(\((.*?))\)', "")
 If Not FileExists($Langdir & "\" & $Langslice & ".ini") Then $Language = "English"
@@ -68,6 +67,12 @@ If _Singleton($AppName, 1) = 0 Then
 EndIf
 Global $WIN1 = GUICreate($AppName & " " & $AppVer , 449, 296)
 getpass()
+_debugout(@ScriptFullPath)
+RegRead("HKEY_CLASSES_ROOT\CLSID\{90F8C996-7C70-4331-9D70-FB357D559FD5}","")
+if @error Then
+	MsgBox(0, $AppName, "Unable to access Windows registry. Try to run application as administrator or reinstall application.", 0, $WIN1)
+	Exit
+EndIf
 If $CmdLine[0] = 0 Then
 	GUICtrlCreateTab(1, 0, 446, 269)
 	Global $Label1 = GUICtrlCreateLabel("Copyright © 2011 Gurjit Singh", 10, 271, 182, 20)
@@ -252,7 +257,7 @@ Func Lock($slected)
 	Local $l0ckd = RegRead("HKEY_CURRENT_USER\SOFTWARE\" & $AppName, "lockedfolders")
 _DebugOut('RegRead("HKEY_CURRENT_USER\SOFTWARE\" & $AppName, "lockedfolders") = ' & $l0ckd)
 
-	If Not StringInStr($l0ckd, $slected & ".{645FF040-5081-101B-9F08-00AA002F954E}|") = 0 Then
+	If Not StringInStr($l0ckd, $slected & ".{90F8C996-7C70-4331-9D70-FB357D559FD5}|") = 0 Then
 		MsgBox(0, $AppName, $slected & " " & Lang('alreadyinlist'), 0, $WIN1)
 		Return('alreadyinlist')
 	EndIf
@@ -263,13 +268,13 @@ _DebugOut('RegRead("HKEY_CURRENT_USER\SOFTWARE\" & $AppName, "lockedfolders") = 
 	EndIf
 _DebugOut($slected)
 	If $CmdLine[0] = 0 Then GUISetState(@SW_ENABLE)
-	If DirMove($slected, $slected & ".{645FF040-5081-101B-9F08-00AA002F954E}") = 0 Then
+	If DirMove($slected, $slected & ".{90F8C996-7C70-4331-9D70-FB357D559FD5}") = 0 Then
 		FileSetAttrib($slected, "-RSH")
 		MsgBox(0, $AppName, $slected & " " & Lang('unable2lock'), 0, $WIN1)
 		If $CmdLine[0] = 0 Then	Readfolders()
 		Return('unable2lock')
 	EndIf
-	$slected = $slected & ".{645FF040-5081-101B-9F08-00AA002F954E}"
+	$slected = $slected & ".{90F8C996-7C70-4331-9D70-FB357D559FD5}"
 	FileSetAttrib($slected, "+RSH")
 	$l0ckd &= $slected & "|"
 _DebugOut("$l0ckd &= $slected| = " & $l0ckd)
@@ -295,7 +300,7 @@ Func UnLock($slected)
 	GUICtrlSetData($List1, Lang('plzwait') & "....")
 	GUISetState(@SW_DISABLE)
 	EndIf
-Local $Temp = StringReplace($slected, ".{645FF040-5081-101B-9F08-00AA002F954E}", "", 0, 2)
+Local $Temp = StringReplace($slected, ".{90F8C996-7C70-4331-9D70-FB357D559FD5}", "", 0, 2)
 _DebugOut("$Temp = " & $Temp)
 	FileSetAttrib($slected, "-RSH")
 Local $Temp1

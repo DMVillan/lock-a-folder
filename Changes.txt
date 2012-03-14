@@ -3,6 +3,13 @@
 + = Addition, ! = Bug Fix, ^ = Update,* = Move
 __________________________________
 
+LocK-A-FoLdeR Version 3.10.2 | 14-03-2012
+* Updated Folder Locking Technique
++ Added Portuguese Language
+
+LocK-A-FoLdeR Version 3.10.1 | 09-03-2012
+! Bug fix
+
 LocK-A-FoLdeR Version 3.10 | 08-03-2012
 * LocK-A-FoLdeR 3.10 uses a new technique to lock folders which is more reliable,fast and compatible with all filesystems.
 * Compatibility for backward versions is dropped.

@@ -1,4 +1,4 @@
-; LocK-A-FoLdeR 3.10.1
+; LocK-A-FoLdeR 3.10.2
 ; © 2011 Gurjit Singh.
 ;
 ; Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,8 +14,10 @@
 ; limitations under the License.
 ;
   !include "MUI2.nsh"
+  !include "LogicLib.nsh"
+  !include "x64.nsh"  
    !define MUI_NAME "LocK-A-FoLdeR"
-   !define MUI_VER "3.10.1"
+   !define MUI_VER "3.10.2"
    !define MUI_LINK "http://code.google.com/p/lock-a-folder"
    !define APPFILE "lock-a-folder.exe"
    !define OUTFILE "${MUI_NAME}-V${MUI_VER}.exe"
@@ -64,10 +66,13 @@ XPStyle On
   !insertmacro MUI_UNPAGE_INSTFILES
   !insertmacro MUI_LANGUAGE "English"
 
+!define SHCNE_ASSOCCHANGED 0x08000000
+!define SHCNF_IDLIST 0
+ 
 Function .onInit
 ReadRegStr $tempvar HKCU "Software\${MUI_NAME}" "lockedfolders"
 Strcmp $tempvar '' not 0
-MessageBox MB_YESNO "${MUI_NAME} 3.10.1 is not Backward compatible.$\nDo you want to Unlock Previously Locked folders first ?" IDYES 0 IDNO +5
+MessageBox MB_YESNO "${MUI_NAME} 3.10.2 is not Backward compatible.$\nDo you want to Unlock Previously Locked folders first ?" IDYES 0 IDNO +5
 ReadRegStr $tempvar HKCU "Software\${MUI_NAME}" "Install Dir"
 Execwait '"$tempvar\${APPFILE}" /ukall'
 Abort "Folders Unlocked Successfully"
@@ -91,6 +96,7 @@ not:
 functionend
 
 Function un.onInit
+
 FindProcDLL::FindProc "${APPFILE}"
 IntCmp $R0 1 0 notRunning
 MessageBox MB_YESNO "${MUI_NAME} is already running. Do you want to close it first ?$\nHitting NO will force Installer to quit " IDYES 0 IDNO exit
@@ -128,6 +134,19 @@ Section "Components"
 	File "Lang\*.*"
 	  SetOutPath "$INSTDIR"
   WriteRegStr HKCU "Software\${MUI_NAME}" "Install Dir" $INSTDIR
+  ${If} ${RunningX64}
+    SetRegView 64
+  ${EndIf}
+ WriteRegStr HKCR "CLSID\{90F8C996-7C70-4331-9D70-FB357D559FD5}" "" "Lock-A-Folder"
+ WriteRegStr HKCR "CLSID\{90F8C996-7C70-4331-9D70-FB357D559FD5}" "InfoTip" "Locked Folder"
+ WriteRegStr HKCR "CLSID\{90F8C996-7C70-4331-9D70-FB357D559FD5}" "NeverShowExt" ""
+ WriteRegStr HKCR "CLSID\{90F8C996-7C70-4331-9D70-FB357D559FD5}\DefaultIcon" "" "$INSTDIR\${APPFILE},0"
+ WriteRegStr HKCR "CLSID\{90F8C996-7C70-4331-9D70-FB357D559FD5}\Shell" "" "Open"
+ WriteRegStr HKCR "CLSID\{90F8C996-7C70-4331-9D70-FB357D559FD5}\Shell\Explore" "" ""  
+ WriteRegStr HKCR "CLSID\{90F8C996-7C70-4331-9D70-FB357D559FD5}\Shell\Open" "" ""  
+  ${If} ${RunningX64}
+   SetRegView 32
+  ${EndIf}
   WriteUninstaller "$INSTDIR\Uninstall.exe"
   WriteRegExpandStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${MUI_NAME}" "UninstallString" '"$INSTDIR\Uninstall.exe"'
   WriteRegExpandStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${MUI_NAME}" "InstallLocation" "$INSTDIR"
@@ -137,6 +156,8 @@ Section "Components"
   WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\${MUI_NAME}" "HelpLink" "${MUI_LINK}"
   WriteRegStr HKCU "Software\${MUI_NAME}" "EP" ""
 
+  System::Call 'shell32.dll::SHChangeNotify(i, i, i, i) v \
+  (${SHCNE_ASSOCCHANGED}, ${SHCNF_IDLIST}, 0, 0)'  
 SetAutoClose true
 SectionEnd
 
