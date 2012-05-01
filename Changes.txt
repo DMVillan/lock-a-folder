@@ -3,6 +3,12 @@
 + = Addition, ! = Bug Fix, ^ = Update,* = Move
 __________________________________
 
+LocK-A-FoLdeR Version 3.10.3 | 01-05-2012
++ Added Language Norwegian (bokmal)
++ Added Language Norwegian (nynorsk)
++ Added Language Serbian
+! Fixed issue 62 unable to access windows registry (windows 7 x64)
+
 LocK-A-FoLdeR Version 3.10.2 | 14-03-2012
 * Updated Folder Locking Technique
 + Added Portuguese Language
