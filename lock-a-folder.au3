@@ -68,6 +68,7 @@ EndIf
 Global $WIN1 = GUICreate($AppName & " " & $AppVer , 449, 296)
 getpass()
 _debugout(@ScriptFullPath)
+SetError(0)
 RegRead("HKEY_CLASSES_ROOT\CLSID\{90F8C996-7C70-4331-9D70-FB357D559FD5}","")
 if @error Then
 	MsgBox(0, $AppName, "Unable to access Windows registry. Try to run application as administrator or reinstall application.", 0, $WIN1)
