@@ -1,4 +1,4 @@
-; LocK-A-FoLdeR 3.10.2
+; LocK-A-FoLdeR 3.10.3
 ; © 2011 Gurjit Singh.
 ;
 ; Licensed under the Apache License, Version 2.0 (the "License");
@@ -17,7 +17,7 @@
   !include "LogicLib.nsh"
   !include "x64.nsh"  
    !define MUI_NAME "LocK-A-FoLdeR"
-   !define MUI_VER "3.10.2"
+   !define MUI_VER "3.10.3"
    !define MUI_LINK "http://code.google.com/p/lock-a-folder"
    !define APPFILE "lock-a-folder.exe"
    !define OUTFILE "${MUI_NAME}-V${MUI_VER}.exe"
@@ -72,7 +72,7 @@ XPStyle On
 Function .onInit
 ReadRegStr $tempvar HKCU "Software\${MUI_NAME}" "lockedfolders"
 Strcmp $tempvar '' not 0
-MessageBox MB_YESNO "${MUI_NAME} 3.10.2 is not Backward compatible.$\nDo you want to Unlock Previously Locked folders first ?" IDYES 0 IDNO +5
+MessageBox MB_YESNO "${MUI_NAME} 3.10.3 is not Backward compatible.$\nDo you want to Unlock Previously Locked folders first ?" IDYES 0 IDNO +5
 ReadRegStr $tempvar HKCU "Software\${MUI_NAME}" "Install Dir"
 Execwait '"$tempvar\${APPFILE}" /ukall'
 Abort "Folders Unlocked Successfully"
