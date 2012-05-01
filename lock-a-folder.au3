@@ -1,21 +1,22 @@
 #NoTrayIcon
-#region ;**** Directives created by AutoIt3Wrapper_GUI ****
+#Region ;**** Directives created by AutoIt3Wrapper_GUI ****
 #AutoIt3Wrapper_Icon=appicon.ico
 #AutoIt3Wrapper_Outfile=lock-a-folder.exe
 #AutoIt3Wrapper_Compression=4
-#AutoIt3Wrapper_UseX64=n
+#AutoIt3Wrapper_Compile_Both=y
+#AutoIt3Wrapper_UseX64=y
 #AutoIt3Wrapper_Res_Comment=LocK-A-FoLdeR allows you to hide and lock up any folders on your computer.
-#AutoIt3Wrapper_Res_Description=LocK-A-FoLdeR 3.10.2
-#AutoIt3Wrapper_Res_Fileversion=3.10.2.0
-#AutoIt3Wrapper_Res_ProductVersion=3.10.2
+#AutoIt3Wrapper_Res_Description=LocK-A-FoLdeR 3.10.3
+#AutoIt3Wrapper_Res_Fileversion=3.10.3.0
+#AutoIt3Wrapper_Res_ProductVersion=3.10.3
 #AutoIt3Wrapper_Res_LegalCopyright=© Gurjit Singh
 #AutoIt3Wrapper_Res_SaveSource=y
 #AutoIt3Wrapper_Res_Language=1033
-#endregion ;**** Directives created by AutoIt3Wrapper_GUI ****
+#EndRegion ;**** Directives created by AutoIt3Wrapper_GUI ****
 
 #cs ----------------------------------------------------------------------------
 
-	LocK-A-FoLdeR Version: 3.10.2
+	LocK-A-FoLdeR Version: 3.10.3
 	Author: Gurjit Singh
 	Webpage: http://lock-a-folder.googlecode.com/
 	Written in AutoIt v3.3.8.1
@@ -37,7 +38,7 @@
 
 #ce ----------------------------------------------------------------------------
 Opt("MustDeclareVars", 1)
-Global Const $AppName = "LocK-A-FoLdeR",$AppVer = "3.10.2",$Apppage = "http://lock-a-folder.googlecode.com/",$updatefile = 'http://lock-a-folder.googlecode.com/hg/Updates.ini'
+Global Const $AppName = "LocK-A-FoLdeR",$AppVer = "3.10.3",$Apppage = "http://lock-a-folder.googlecode.com/",$updatefile = 'http://lock-a-folder.googlecode.com/hg/Updates.ini'
 Global $Langdir = @ScriptDir & '\' & 'Lang',$Language = RegRead("HKEY_CURRENT_USER\SOFTWARE\" & $AppName, "Lang"),$Transby,$Translink,$winver
 #include <ButtonConstants.au3>
 #include <GUIConstantsEx.au3>
